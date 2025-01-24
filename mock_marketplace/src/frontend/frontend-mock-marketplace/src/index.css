@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+.select {
+    border: 1px solid #989898;
+    background: #fff;
+    width: 450px;
+    padding: 8px;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+}
+
+.text-for-customer {
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.customer-data-inputs {
+    font-family: Times New Roman, Times New Roman, serif;
+    font-size: 16px;
+    width: 450px;
+    margin-top: 5px;
+}
+
+.button-minus-in-modal {
+    margin-left: 10px;
+}
+
+.button-plus-in-modal {
+    margin-right: 10px;
+}
+
+.image-in-modal {
+    width: 200px;
+}
+
+.input-in-modal {
+    font-size: 17px;
+    font-family: Times New Roman, Times New Roman, serif;
+    background-color: rgb(240, 240, 240);
+}
+
+.modal-title {
+    font-family: Times New Roman, Times New Roman, serif;
+    font-size: 40px;
+}
+
+.properties-of-wear-in-modal {
+    font-weight: normal;
+    font-size: 26px;
+    font-family: Times New Roman, Times New Roman, serif;
+    text-align: center;
+}
+
+.name-of-wear-in-modal {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Times New Roman, Times New Roman, serif;
+}
+
+.name-of-wear {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Times New Roman, Times New Roman, serif;
+}
+
+.create-line {
+    height: 5px;
+    border-top: 2px solid #989898;
+}
