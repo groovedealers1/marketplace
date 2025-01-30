@@ -5,6 +5,8 @@ import {useEffect, useState} from "react";
 
 export default function HomePage() {
 
+
+
     const [wears, setWears] = useState([]);
 
     const getAllWears = () => {

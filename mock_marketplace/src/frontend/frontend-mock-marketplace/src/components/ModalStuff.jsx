@@ -3,7 +3,6 @@ import { Button, Modal} from 'antd';
 import {
     Form,
     Input,
-    Select
 } from 'antd';
 import axios from "axios";
 
@@ -13,12 +12,16 @@ const ModalStuff = ({ wear }) => {
     const [open, setOpen] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(wear.price);
-    const [fio, setFio] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
+    const [fio, setFio] = useState();
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
 
-    const [pickUpLocation, setPickUpLocation] = useState('...');
+    const [pickUpLocation, setPickUpLocation] = useState();
     const [comment, setComment] = useState('');
+
+    const emailRe = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+    const phoneRe = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
+    const fioRe = /^[А-ЯЁ][а-яё]+((-[А-ЯЁ][а-яё]+)?|[ ][А-ЯЁ][а-яё]+([ ][А-ЯЁ][а-яё]+)?)$/u;
 
     const handleFioChange = (e) => {
         setFio(e.target.value);
@@ -61,22 +64,23 @@ const ModalStuff = ({ wear }) => {
     };
 
     const handleOk = () => {
-        const purchase = () => {
+        if ((fio === undefined || !fioRe.test(fio)) || (phone === undefined || !phoneRe.test(phone)) || (email === undefined || !emailRe.test(email)) || (pickUpLocation === undefined || pickUpLocation === 'none')) {
+            alert("Заполните все поля")
+        } else {
             axios.post('http://127.0.0.1:8000/purchase', {name: wear.name,
-                                                                    quantity: quantity,
-                                                                    fio: fio,
-                                                                    phone: phone,
-                                                                    email: email,
-                                                                    pickUpLocation: pickUpLocation,
-                                                                    comment: comment});
+                quantity: quantity,
+                fio: fio,
+                phone: phone,
+                email: email,
+                pickUpLocation: pickUpLocation,
+                comment: comment});
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                setOpen(false);
+            }, ); // timeout
+            setQuantity(1);
         }
-        purchase();
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            setOpen(false);
-        }, 2000);
-        setQuantity(1);
     };
 
     const handleCancel = () => {
@@ -153,7 +157,7 @@ const ModalStuff = ({ wear }) => {
                 >
                     <Form.Item>
                         <p className="text-for-customer">ФИО</p>
-                        <Input className='customer-data-inputs' onChange={handleFioChange} />
+                        <Input className='customer-data-inputs' onChange={handleFioChange}/>
                     </Form.Item>
                     <Form.Item>
                         <p className="text-for-customer">Ваш телефон</p>

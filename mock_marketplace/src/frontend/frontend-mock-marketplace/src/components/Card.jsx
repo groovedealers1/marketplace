@@ -17,6 +17,8 @@ export default function Card () {
         })
     }
 
+    document.title = wear.name;
+
     useEffect(() => {
         getWear()
     }, []);
