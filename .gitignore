@@ -1,9 +1,12 @@
 mock_marketplace/__pycache__
 
+mock_marketplace/src/__pycache__
 mock_marketplace/src/posts/__pycache__
 mock_marketplace/src/auth/__pycache__
 mock_marketplace/src/routers/__pycache__
 mock_marketplace/src/frontend/.idea
+mock_marketplace/src/admin/__pycache__
+mock_marketplace/src/tg_bot/__pycache__
 
 mock_marketplace/alembic.ini
 mock_marketplace/alembic/__pycache__
@@ -13,7 +16,8 @@ mock_marketplace/.env
 
 mock_marketplace/tests
 
-mock_marketplace/src/frontend/frontend-mock-marketplace/public/images
+mock_marketplace/src/frontend/frontend-mock-marketplace/public/images/
+
 
 .idea
 poetry.lock

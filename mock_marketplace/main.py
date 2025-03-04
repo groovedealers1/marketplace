@@ -10,7 +10,6 @@ from src.routers.routers_for_wears import router as wears_router
 from src.routers.routers_for_purchase import router as purchase_router
 from src.admin_routers import router as admin_router
 
-# from src.auth.schemas import UserRead, UserCreate
 
 origins = [
     'http://localhost:5173',
@@ -42,9 +41,3 @@ app.include_router(
     prefix="/auth/jwt",
     tags=["auth"],
 )
-
-# app.include_router(
-#     fastapi_users.get_register_router(UserRead, UserCreate),
-#     prefix="/auth",
-#     tags=["auth"],
-# )

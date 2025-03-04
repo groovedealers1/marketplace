@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Modal} from 'antd';
+import { Button, Modal } from 'antd';
 import {
     Form,
     Input,
@@ -15,6 +15,7 @@ const ModalStuff = ({ wear }) => {
     const [fio, setFio] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
+    // const [sizes, setSizes] = useState({});
 
     const [pickUpLocation, setPickUpLocation] = useState();
     const [comment, setComment] = useState('');
@@ -22,6 +23,7 @@ const ModalStuff = ({ wear }) => {
     const emailRe = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
     const phoneRe = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
     const fioRe = /^[А-ЯЁ][а-яё]+((-[А-ЯЁ][а-яё]+)?|[ ][А-ЯЁ][а-яё]+([ ][А-ЯЁ][а-яё]+)?)$/u;
+
 
     const handleFioChange = (e) => {
         setFio(e.target.value);
@@ -68,6 +70,7 @@ const ModalStuff = ({ wear }) => {
             alert("Заполните все поля")
         } else {
             axios.post('http://127.0.0.1:8000/purchase', {name: wear.name,
+                size: wear.size,
                 quantity: quantity,
                 fio: fio,
                 phone: phone,
@@ -127,13 +130,14 @@ const ModalStuff = ({ wear }) => {
 
                 <table>
                     <tbody><tr>
-                        <th rowSpan="3"><img className='image-in-modal' alt='sorry we cant load the image (((' src={'/images/' + wear.images.name_for_image_1}/></th>
+                        <th rowSpan="3"><img className='image-in-modal' alt='sorry we cant load the image (((' src={'/images/' + wear.image}/></th>
                     </tr>
                     <tr>
                         <th><p className="properties-of-wear-in-modal">{price || wear.price} ₽</p></th>
                     </tr>
                     <tr>
                         <th className='properties-of-wear-in-modal'>
+                            <p>{wear.size}</p>
                             <button className='button-plus-in-modal' onClick={() => check_for_plus()} type='button'>
                                 +
                             </button>

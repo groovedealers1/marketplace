@@ -22,6 +22,10 @@ td, th {
     text-overflow: ellipsis;
 }
 
+.sizes-color {
+    display: inline;
+}
+
 .text-for-customer {
     font-family: monospace;
     font-size: 18px;

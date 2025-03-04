@@ -5,8 +5,6 @@ import {useEffect, useState} from "react";
 
 export default function HomePage() {
 
-
-
     const [wears, setWears] = useState([]);
 
     const getAllWears = () => {
@@ -20,22 +18,19 @@ export default function HomePage() {
         getAllWears();
     }, []);
 
-
-
-
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                 <center><h2 className="text-2xl font-bold tracking-tight text-gray-900">Каталог</h2></center>
 
                 <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                    {wears.map(w => (
+                    {wears.map((w, index) => (
                         <div key={w.id} className="group relative">
                             <div
                                 className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                                 <img
                                     alt='sorry we cant load the image'
-                                    src={'./images/' + w.images.name_for_image_1}
+                                    src={'./images/' + w.images[index].name_for_image_1}
                                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                 />
                             </div>
