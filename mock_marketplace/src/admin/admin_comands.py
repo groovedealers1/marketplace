@@ -34,15 +34,17 @@ async def insert_products(name: str, price: int, collection: str | None, discoun
 async def delete_product(wear_id: int, wear_name: str) -> None:
     async with async_session() as session:
 
-        stmt_1 = delete(Products).where(wear_id == Products.id)
-        await session.execute(stmt_1)
-
-        stmt_2 = delete(Images).where(wear_id == Images.id)
-        await session.execute(stmt_2)
+        stmt_4 = delete(Quantity).where(wear_id == Images.id)
+        await session.execute(stmt_4)
 
         stmt_3 = delete(Sizes).where(wear_id == Sizes.id)
         await session.execute(stmt_3)
 
+        stmt_2 = delete(Images).where(wear_id == Images.id)
+        await session.execute(stmt_2)
+
+        stmt_1 = delete(Products).where(wear_id == Products.id)
+        await session.execute(stmt_1)
 
         await session.commit()
 

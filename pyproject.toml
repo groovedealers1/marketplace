@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "mock-marketplacee"
+name = "mock_marketpace"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["DVRST <kaitoshoma12@gmail.com>"]
 readme = "README.md"
+
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -19,7 +20,7 @@ psycopg2-binary = "^2.9.9"
 fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 passlib = "^1.7.4"
 aiogram = "^3.15.0"
-
+requests = "^2.32.3"
 
 [build-system]
 requires = ["poetry-core"]

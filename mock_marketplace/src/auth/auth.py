@@ -1,8 +1,8 @@
-from fastapi_users.authentication import CookieTransport, AuthenticationBackend, JWTStrategy
+from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, BearerTransport
 from config import settings
 
 
-cookie_transport = CookieTransport(cookie_name="bounce", cookie_max_age=3600)
+cookie_transport = BearerTransport('auth/jwt/login')
 SECRET = f"{settings.COOKIE_SECRET}"
 
 

@@ -1,7 +1,10 @@
+import uvicorn
+
 from fastapi import FastAPI
 from fastapi_users import FastAPIUsers
 from fastapi.middleware.cors import CORSMiddleware
 
+# from src.auth.schemas import UserRead, UserCreate
 from src.auth.database import User
 from src.auth.auth import auth_backend
 from src.auth.manager import get_user_manager
@@ -36,8 +39,16 @@ fastapi_users = FastAPIUsers[User, int](
 app.include_router(router=admin_router)
 app.include_router(router=wears_router)
 app.include_router(router=purchase_router)
-app.include_router(
-    fastapi_users.get_auth_router(auth_backend),
-    prefix="/auth/jwt",
-    tags=["auth"],
-)
+# app.include_router(
+#     fastapi_users.get_auth_router(auth_backend),
+#     prefix="/auth/jwt",
+#     tags=["auth"],
+# )
+# app.include_router(
+#     fastapi_users.get_register_router(UserRead, UserCreate),
+#     prefix="/auth",
+#     tags=["auth"],
+# )
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='0.0.0.0', port=8000)

@@ -13,10 +13,50 @@ td, th {
     padding: 8px;
 }
 
+@font-face {
+    font-family: "Kaliningrad Historical G";
+    src: url("../public/fonts/Kaliningrad Historical G/Kaliningrad_Historical_G_1.ttf")format("truetype");
+}
+
+.admin-panel-name {
+    font-size: 35px;
+    font-family: "Times New Roman", serif;
+}
+
+.wear-img {
+    object-position: center;
+    object-fit: cover;
+    width: calc(100%);
+}
+
+.select-option {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.login-button {
+    margin-left: calc(75%);
+}
+
+.login-input {
+    margin-left: calc(50% - 200px);
+    width: 400px;
+    margin-top: 7px;
+    font-size: 18px;
+    font-family: Times New Roman, Times New Roman, serif;
+}
+
+.success-text {
+    font-size: 35px;
+    font-family: "Kaliningrad Historical G", serif;
+    margin-left: calc(50% - 132px);
+}
+
 .select {
     border: 1px solid #989898;
     background: #fff;
-    width: 450px;
+    width: calc(100%);
     padding: 8px;
     border-radius: 5px;
     text-overflow: ellipsis;
@@ -35,7 +75,7 @@ td, th {
 .customer-data-inputs {
     font-family: Times New Roman, Times New Roman, serif;
     font-size: 16px;
-    width: 450px;
+    width: calc(100%);
     margin-top: 5px;
 }
 

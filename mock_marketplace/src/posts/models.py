@@ -19,9 +19,9 @@ class Products(Base):
     collection: Mapped[str_256 | None]
     discount: Mapped[int | None]
 
-    images: Mapped[list["Images"]] = relationship("Images", back_populates="product")
-    sizes: Mapped[list["Sizes"]] = relationship("Sizes", back_populates="product")
-    quantity: Mapped[list["Quantity"]] = relationship("Quantity", back_populates="product")
+    images: Mapped[list["Images"]] = relationship("Images", cascade="all, delete", back_populates="product")
+    sizes: Mapped[list["Sizes"]] = relationship("Sizes", cascade="all, delete", back_populates="product")
+    quantity: Mapped[list["Quantity"]] = relationship("Quantity", cascade="all, delete",  back_populates="product")
 
 
 class Images(Base):

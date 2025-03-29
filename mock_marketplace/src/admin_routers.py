@@ -4,7 +4,6 @@ from fastapi import APIRouter, UploadFile
 
 from .admin.admin_comands import insert_products, delete_product
 
-
 router = APIRouter(tags=['insert wear in db'], prefix='/admin')
 
 
@@ -16,13 +15,6 @@ async def all_wears(name: str, price: int, files: list[UploadFile],
                     size_6: str = None, quantity_1: int = None, quantity_2: int = None, quantity_3: int = None,
                     quantity_4: int = None, quantity_5: int = None, quantity_6: int = None):
 
-    path_file = pathlib.Path(__file__).parent / 'frontend' / 'frontend-mock-marketplace' / 'public' / 'images'
-
-    for file in files:
-        content_file = await file.read()
-
-        with open(f"{path_file}/{file.filename}", "wb") as f:
-            f.write(content_file)
 
     await insert_products(
         name=name,
@@ -58,3 +50,14 @@ async def all_wears(name: str, price: int, files: list[UploadFile],
 async def delete_wear(wear_id: int, wear_name: str) -> str:
     await delete_product(wear_id, wear_name)
     return 'success'
+
+
+@router.post('/upload_images')
+async def upload_images(files: list[UploadFile]):
+    path_file = pathlib.Path(__file__).parent / 'frontend' / 'frontend-mock-marketplace' / 'public' / 'images'
+
+    for file in files:
+        content_file = await file.read()
+
+        with open(f"{path_file}/{file.filename}", "wb") as f:
+            f.write(content_file)
