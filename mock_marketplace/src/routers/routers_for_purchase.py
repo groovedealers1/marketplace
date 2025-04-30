@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 
-from ..posts.orm import purchase_wear
-
+from mock_marketplace.src.posts import purchase_wear
+from mock_marketplace.src.models import ProductModelPurchase
 
 router = APIRouter(tags=['get users and  wear data and sending it to telegram bot'], prefix='/purchase')
 
 
 @router.post('')
-async def purchase(request_body: Request):
-    wear_data = await request_body.json()
-    await purchase_wear(wear_data)
+async def purchase(request_body: ProductModelPurchase):
+    await purchase_wear(request_body)

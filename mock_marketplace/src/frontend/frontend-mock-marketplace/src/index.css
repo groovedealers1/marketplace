@@ -13,14 +13,73 @@ td, th {
     padding: 8px;
 }
 
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+  margin: -76px 0 0 -76px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #6c6565;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 }
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+  from{ bottom:-100px; opacity:0 }
+  to{ bottom:0; opacity:1 }
+}
+
+#card-div {
+    display: none;
+    text-align: center;
+}
+
 @font-face {
-    font-family: "Kaliningrad Historical G";
-    src: url("../public/fonts/Kaliningrad Historical G/Kaliningrad_Historical_G_1.ttf")format("truetype");
+    font-family: "Pulpo";
+    src: url("../public/fonts/Pulpo/pulpo-medium-italic.ttf")format("truetype");
+}
+
+
+.details-text {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Times New Roman, Times New Roman, serif;
 }
 
 .admin-panel-name {
+    margin-left: calc(20%);
+
     font-size: 35px;
-    font-family: "Times New Roman", serif;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
 }
 
 .wear-img {
@@ -49,7 +108,7 @@ td, th {
 
 .success-text {
     font-size: 35px;
-    font-family: "Kaliningrad Historical G", serif;
+    font-family:  serif;
     margin-left: calc(50% - 132px);
 }
 

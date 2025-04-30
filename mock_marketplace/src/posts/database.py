@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import mapped_column
 
-from config import settings
+from mock_marketplace import settings
 from typing import Annotated
 
 
@@ -15,4 +15,4 @@ engine = create_async_engine(
     echo=False
 )
 
-async_session = async_sessionmaker(engine, expire_on_commit=False)
+async_session = async_sessionmaker(engine, autoflush=False, expire_on_commit=False)

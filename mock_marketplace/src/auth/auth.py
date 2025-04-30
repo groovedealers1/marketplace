@@ -1,5 +1,5 @@
 from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, BearerTransport
-from config import settings
+from mock_marketplace import settings
 
 
 cookie_transport = BearerTransport('auth/jwt/login')

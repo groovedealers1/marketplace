@@ -1,91 +1,66 @@
 import React from 'react';
 import {useEffect, useState} from 'react'
 import axios from "axios";
-import ModalBuyStuff from "./ModalBuyStuff.jsx";
 import { Segmented } from "antd";
 
+import ModalBuyStuff from "./ModalBuyStuff.jsx";
+import {InitialStateForGetWear} from "../models/ModelsForWear.js";
 
 export default function Card () {
     const wearId = document.location.href.split('/')[4]
 
-    const [wear, setWears] = useState({images: {0: {name_for_image_1: '', name_for_image_2: '', name_for_image_3: ''}},
-                                                   sizes: {0 :{size_1: 'S', size_2: 'M', size_3: 'L'}},
-                                                   quantity: {0: {quantity_1: '', quantity_2: '', quantity_3: '', quantity_4: '', quantity_5: '', quantity_6: ''}}, })
+    const [wear, setWear] = useState(InitialStateForGetWear)
 
-    const quantities = [wear.quantity[0].quantity_1, wear.quantity[0].quantity_2, wear.quantity[0].quantity_3,
-                                   wear.quantity[0].quantity_4, wear.quantity[0].quantity_5, wear.quantity[0].quantity_6].filter(Boolean)
-    const sizes = [wear.sizes[0].size_1, wear.sizes[0].size_2, wear.sizes[0].size_3,
-                              wear.sizes[0].size_4, wear.sizes[0].size_5, wear.sizes[0].size_6].filter(Boolean)
-
+    const [size, setSize] = useState()
     const [numberOfQuantity, setNumber] = useState()
-    const [modal, setModal] = useState(true)
-    const [size, setSize] = useState(sizes[0])
+    const [quantity, setQuantity] = useState()
 
 
     const getWear = () => {
         axios.get('http://localhost:8000/wears/' + wearId).then(r => {
-            const stuff = r.data[0];
-            const a = [...(Object.values(stuff.sizes[0])).slice(0, 4), ...(Object.values(stuff.sizes[0])).slice(6)].reduce((accumulator, currentValue) => accumulator + currentValue, 0,);
-
-            if (a === 0) {
-                setModal(false)
+            if (Object.values(r.data.sizes[0]).every(x => x === null) === true) {
+                modalCloseFunc();
             }
-
-            setWears(stuff);
+            setWear(r.data);
         })
+            .then(showPage)
     }
 
-    const handleSizeByDefault = (e) => {
-        if (e === 'S') {
-            return 'quantity_1'
-        } else if (e === 'M') {
-            return 'quantity_2'
-        } else if (e === 'L') {
-            return 'quantity_3'
-        } else if (e === 'XL') {
-            return 'quantity_4'
-        } else if (e === 'XXL') {
-            return 'quantity_5'
-        }
-    }
 
-    const modalFunc = () => {
-        if (modal === false) {
-            let parentElem = document.getElementsByClassName('modal')
-            parentElem.item(0).replaceWith("OUT OF STOCK")
+    const modalCloseFunc = () => {
+        let parentElem = document.getElementsByClassName('modal');
+        if (parentElem.length !== 0) {
+            parentElem.item(0).replaceWith("OUT OF STOCK");
         }
     }
 
     const handleSize = (e) => {
+        const number = 'quantity_' + (Object.values(wear.sizes[0]).indexOf(e) + 1)
+
         setSize(e)
-        if (e === 'S') {
-            setNumber('quantity_1')
-        } else if (e === 'M') {
-            setNumber('quantity_2')
-        } else if (e === 'L') {
-            setNumber('quantity_3')
-        } else if (e === 'XL') {
-            setNumber('quantity_4')
-        } else if (e === 'XXL') {
-            setNumber('quantity_5')
-        } else if (e === 'XXXL') {
-            setNumber('quantity_6')
-        }
+        setNumber(number)
+        setQuantity(wear.quantities[0][number])
+    }
+
+    const showPage = () => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('card-div').style.display = 'block';
     }
 
 
-    document.title = wear.name;
-
     useEffect(() => {
         getWear();
-        modalFunc();
-    }, [modal]);
+        document.title = wear.name
+    }, [wear.name]);
 
 
     return (
 
         <div className="bg-white">
-            <div className="pt-6">
+
+            <div id='loader'></div>
+
+            <div id='card-div' style={{display: 'none'}} className='animate-bottom'>
 
                 {/* Image gallery */}
 
@@ -129,15 +104,14 @@ export default function Card () {
                         <form className="mt-10">
 
                             {/* Color */}
-                            <div className="flex items-center">
-                                <h3 className="sizes-color" > Color:  </h3>
-                                <h3 className="sizes-color"> {wear.colors} </h3>
+                            <div>
+                                <h3>{wear.colors}</h3>
                             </div>
 
                             {/* Sizes */}
 
                             <div className="mt-4">
-                                <Segmented key={1} defaultValue={" "} options={sizes} onChange={handleSize}/>
+                                <Segmented key={1} defaultValue={Object.values(wear.sizes[0]).filter(Boolean)[0]} options={Object.values(wear.sizes[0]).filter(Boolean)} onChange={handleSize}/>
                             </div><br/>
 
 
@@ -148,8 +122,11 @@ export default function Card () {
                                                    price: wear.price,
                                                    id: wear.id,
                                                    image: wear.images[0].name_for_image_1,
-                                                   quantity: quantities[sizes.indexOf(size)],
-                                                   numberOfQuantity: handleSizeByDefault(size)}} />
+
+                                                   quantity: quantity,
+                                                   numberOfQuantity: numberOfQuantity
+                                }}
+                                />
                             </div>
                         </form>
                     </div>
@@ -164,14 +141,9 @@ export default function Card () {
                                 <p className="text-base text-gray-900">{wear.description}</p>
                             </div>
                         </div>
-
-                        <div className="mt-10">
-                            <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
                             <div className="mt-4 space-y-6">
                                 <p className="text-sm text-gray-600">{wear.characteristics}</p>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ import Login from "./components/Login.jsx";
 import AdminCommands from "./components/AdminCommands.jsx";
 
 
-function App(){
+function App() {
   return (
       <React.StrictMode>
         <BrowserRouter>

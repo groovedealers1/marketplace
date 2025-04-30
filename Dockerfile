@@ -6,4 +6,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD ["python3", "mock_marketplace/main.py"]
+CMD ["python", "main.py"]

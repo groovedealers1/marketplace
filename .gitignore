@@ -7,8 +7,9 @@ mock_marketplace/src/routers/__pycache__
 mock_marketplace/src/frontend/.idea
 mock_marketplace/src/admin/__pycache__
 mock_marketplace/src/tg_bot/__pycache__
+mock_marketplace/src/models/__pycache__
 
-mock_marketplace/alembic.ini
+
 mock_marketplace/alembic/__pycache__
 mock_marketplace/alembic/versions/__pycache__
 
@@ -18,6 +19,6 @@ mock_marketplace/tests
 
 mock_marketplace/src/frontend/frontend-mock-marketplace/public/images/
 
-
 .idea
 poetry.lock
+README.md

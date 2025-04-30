@@ -5,9 +5,9 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from config import settings
-from src.posts.models import Base as models_base
-from src.auth.database import Base as auth_base
+from mock_marketplace import settings
+from mock_marketplace.src.posts import Base as models_base
+from mock_marketplace.src.auth import Base as auth_base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

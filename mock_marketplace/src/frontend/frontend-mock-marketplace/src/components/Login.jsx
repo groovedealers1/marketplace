@@ -4,9 +4,10 @@ import {Input, Button} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons"
 import {useNavigate} from "react-router-dom";
 
+import InitialState from "../models/ModelsForAdminData.js"
+
 export default function Login() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [data, setData] = useState(InitialState)
     const navigate = useNavigate()
 
     const makeCookie = (token) => {
@@ -19,26 +20,28 @@ export default function Login() {
     }
 
     const handleSubmit = () => {
+
         axios({
             method: 'post',
             url: 'http://0.0.0.0:8000/auth/jwt/login',
-            data: {username: email, password: password},
+            data: data,
             headers: {
                 'accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        }).then(res => {if (res.status === 200) {makeCookie(res.data.access_token)}})
+        }).catch(error => {if (error.status === 400 || 400) {alert('Неверный логин или пароль')}})
+            .then(res => {makeCookie(res.data.access_token )});
     }
 
     return (
         <div>
             <Input className={'login-input'} size={'large'} placeholder={'email'} prefix={<UserOutlined/>}
-                   onChange={e => setEmail(e.target.value)}/>
+                   onChange={e => setData({...data, username: e.target.value})}/>
 
             <Input className={'login-input'} size={'large'} placeholder={'password'} prefix={<LockOutlined/>}
-                   onChange={e => setPassword(e.target.value)}/>
+                   onChange={e => setData({...data, password: e.target.value})}/>
 
-            <Button className={'login-input'} onClick={handleSubmit}> Login </Button>
+            <Button className={'login-input'} onClick={handleSubmit} > Login </Button>
         </div>
     )
 }

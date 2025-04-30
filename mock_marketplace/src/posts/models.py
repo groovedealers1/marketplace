@@ -21,7 +21,7 @@ class Products(Base):
 
     images: Mapped[list["Images"]] = relationship("Images", cascade="all, delete", back_populates="product")
     sizes: Mapped[list["Sizes"]] = relationship("Sizes", cascade="all, delete", back_populates="product")
-    quantity: Mapped[list["Quantity"]] = relationship("Quantity", cascade="all, delete",  back_populates="product")
+    quantities: Mapped[list["Quantity"]] = relationship("Quantity", cascade="all, delete",  back_populates="product")
 
 
 class Images(Base):
@@ -55,7 +55,7 @@ class Quantity(Base):
     __tablename__ = 'quantity'
 
     id: Mapped[intpk]
-    product: Mapped["Products"] = relationship(back_populates="quantity")
+    product: Mapped["Products"] = relationship(back_populates="quantities")
     product_id: Mapped[int] = mapped_column(ForeignKey('product.id'))
 
     quantity_1: Mapped[int | None]

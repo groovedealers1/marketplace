@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, Boolean
 
-from config import settings
+from mock_marketplace import settings
 
 DATABASE_URL = f'{settings.DATABASE_URL_asyncpg}'
 Base: DeclarativeMeta = declarative_base()

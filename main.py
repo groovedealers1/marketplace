@@ -4,14 +4,14 @@ from fastapi import FastAPI
 from fastapi_users import FastAPIUsers
 from fastapi.middleware.cors import CORSMiddleware
 
-# from src.auth.schemas import UserRead, UserCreate
-from src.auth.database import User
-from src.auth.auth import auth_backend
-from src.auth.manager import get_user_manager
+# from mock_marketplace.src.auth.schemas import UserRead, UserCreate
+from mock_marketplace.src.auth.database import User
+from mock_marketplace.src.auth.auth import auth_backend
+from mock_marketplace.src.auth.manager import get_user_manager
 
-from src.routers.routers_for_wears import router as wears_router
-from src.routers.routers_for_purchase import router as purchase_router
-from src.admin_routers import router as admin_router
+from mock_marketplace.src.routers.routers_for_wears import router as wears_router
+from mock_marketplace.src.routers.routers_for_purchase import router as purchase_router
+from mock_marketplace.src.routers.admin_routers import router as admin_router
 
 
 origins = [
@@ -39,11 +39,11 @@ fastapi_users = FastAPIUsers[User, int](
 app.include_router(router=admin_router)
 app.include_router(router=wears_router)
 app.include_router(router=purchase_router)
-# app.include_router(
-#     fastapi_users.get_auth_router(auth_backend),
-#     prefix="/auth/jwt",
-#     tags=["auth"],
-# )
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt",
+    tags=["auth"],
+)
 # app.include_router(
 #     fastapi_users.get_register_router(UserRead, UserCreate),
 #     prefix="/auth",

@@ -3,59 +3,33 @@ import { Button, Modal, Form, Input } from 'antd';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
+import {InitialStateForBuyWear} from "../models/ModelsForWear.js";
+
 
 const ModalBuyStuff = ({ wear }) => {
-    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState(InitialStateForBuyWear);
     const [open, setOpen] = useState(false);
-    const [quantity, setQuantity] = useState(1);
-    const [price, setPrice] = useState(wear.price);
-    const [fio, setFio] = useState();
-    const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
 
-    const [pickUpLocation, setPickUpLocation] = useState();
-    const [comment, setComment] = useState('');
+    const navigate = useNavigate();
 
     const emailRe = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
     const phoneRe = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
     const fioRe = /^[А-ЯЁ][а-яё]+((-[А-ЯЁ][а-яё]+)?|[ ][А-ЯЁ][а-яё]+([ ][А-ЯЁ][а-яё]+)?)$/u;
 
-    const navigate = useNavigate();
-
-
-    const handleFioChange = (e) => {
-        setFio(e.target.value);
-    };
-
-    const handlePhoneChange = (e) => {
-        setPhone(e.target.value);
-    }
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    }
-
-    const handlePickUpLocationChange = (e) => {
-        setPickUpLocation(e.target.value);
-    }
-
-    const handleCommentChange = (e) => {
-        setComment(e.target.value);
-    }
 
     const check_for_plus = () => {
-        if (quantity + 1 > wear.quantity) {
-            return setQuantity(wear.quantity);
+        if (data.quantity + 1 > wear.quantity) {
+            return setData({...data, quantity: wear.quantity});
         } else {
-            return setQuantity(quantity + 1);
+            return setData({...data, quantity: data.quantity + 1});
         }
     };
 
     const check_for_minus = () => {
-        if (quantity - 1 <= 0) {
+        if (data.quantity - 1 <= 0) {
             return 1;
         } else {
-            return setQuantity(quantity - 1);
+            return setData({...data, quantity: data.quantity - 1});
         }
     };
 
@@ -64,39 +38,38 @@ const ModalBuyStuff = ({ wear }) => {
     };
 
     const handleOk = () => {
-        if ((fio === undefined || !fioRe.test(fio)) || (phone === undefined || !phoneRe.test(phone)) || (email === undefined || !emailRe.test(email)) || (pickUpLocation === undefined || pickUpLocation === 'none')) {
+        if ((data.fio === undefined || !fioRe.test(data.fio))
+            || (data.phone === undefined || !phoneRe.test(data.phone))
+            || (data.email === undefined || !emailRe.test(data.email))
+            || (data.pickUpLocation === undefined || data.pickUpLocation === 'none')) {
+
             alert("Заполните все поля")
+
         } else {
             axios.post('http://127.0.0.1:8000/purchase', {
                 name: wear.name,
                 id: wear.id,
                 size: wear.size,
-                quantity: quantity,
-                numberOfQuantity: wear.numberOfQuantity,
-                fio: fio,
-                phone: phone,
-                email: email,
-                pickUpLocation: pickUpLocation,
-                comment: comment
-            });
-            setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
-                setOpen(false);
-            }, 3000); // timeout
-            setQuantity(1);
-            navigate('/success');
+                number_of_quantity: wear.numberOfQuantity,
+
+                quantity: data.quantity,
+                fio: data.fio,
+                phone: data.phone,
+                email: data.email,
+                pick_up_location: data.pickUpLocation,
+                comment: data.comment
+                }).then(navigate('/success'));
         }
     };
 
     const handleCancel = () => {
         setOpen(false);
-        setQuantity(1);
+        setData({...data, quantity: 1});
     };
 
     useEffect(() => {
-            setPrice(wear.price * quantity)
-    }, [quantity])
+        setData({...data, price: wear.price * data.quantity})
+    }, [data.quantity])
 
     return (
         <>
@@ -114,7 +87,6 @@ const ModalBuyStuff = ({ wear }) => {
                     <center><Button
                         key="submit"
                         type="primary"
-                        loading={loading}
                         onClick={handleOk}
                         style={{
                             backgroundColor: 'black',
@@ -136,7 +108,7 @@ const ModalBuyStuff = ({ wear }) => {
                         <th rowSpan="3"><img className='image-in-modal' alt='sorry we cant load the image (((' src={'/images/' + wear.image}/></th>
                     </tr>
                     <tr>
-                        <th><p className="properties-of-wear-in-modal">{price || wear.price} ₽</p></th>
+                        <th><p className="properties-of-wear-in-modal">{data.price || wear.price} ₽</p></th>
                     </tr>
                     <tr>
                         <th className='properties-of-wear-in-modal'>
@@ -144,7 +116,7 @@ const ModalBuyStuff = ({ wear }) => {
                             <button className='button-plus-in-modal' onClick={() => check_for_plus()} type='button'>
                                 +
                             </button>
-                            <p style={{display: "inline"}}>{quantity}</p>
+                            <p style={{display: "inline"}}>{data.quantity}</p>
                             <button className='button-minus-in-modal' onClick={() => check_for_minus()} style={{display: "inline"}} type='button'>{/*setQuantity(quantity - 1)*/}
                                 -
                             </button>
@@ -164,15 +136,15 @@ const ModalBuyStuff = ({ wear }) => {
                 >
                     <Form.Item>
                         <p className="text-for-customer">ФИО</p>
-                        <Input className='customer-data-inputs' onChange={handleFioChange}/>
+                        <Input className='customer-data-inputs' onChange={e => setData({...data, fio: e.target.value})}/>
                     </Form.Item>
                     <Form.Item>
                         <p className="text-for-customer">Ваш телефон</p>
-                        <Input className='customer-data-inputs' onChange={handlePhoneChange}/>
+                        <Input className='customer-data-inputs' onChange={e => setData({...data, phone: e.target.value})}/>
                     </Form.Item>
                     <Form.Item style={{marginBottom: 50}}>
                         <p className="text-for-customer">Ваш Email</p>
-                        <Input className='customer-data-inputs' onChange={handleEmailChange}/>
+                        <Input className='customer-data-inputs' onChange={e => setData({...data, email: e.target.value})}/>
                     </Form.Item>
                     <p style={{
                         fontWeight: "bold",
@@ -184,7 +156,7 @@ const ModalBuyStuff = ({ wear }) => {
 
                     <Form.Item>
                         <p className="text-for-customer">Pickup location</p>
-                        <select className='select' onChange={handlePickUpLocationChange}>
+                        <select className='select' onChange={e => setData({...data, pickUpLocation: e.target.value})}>
                             <option className='select-option' value='none'>choose pickup location</option>
                             <option className='select-option' value='Комсомольская 153'>Комсомольская 153</option>
                             <option className='select-option' value='Мира 306'>Мира 306</option>
@@ -200,7 +172,7 @@ const ModalBuyStuff = ({ wear }) => {
                     </Form.Item>
                     <Form.Item>
                         <p className="text-for-customer">Comment</p>
-                        <Input className='customer-data-inputs' onChange={handleCommentChange}/>
+                        <Input className='customer-data-inputs' onChange={e => setData({...data, comment: e.target.value})}/>
                     </Form.Item>
                 </Form>
             </div>
