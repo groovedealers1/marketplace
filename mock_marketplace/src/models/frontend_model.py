@@ -9,7 +9,7 @@ class ImagesModel(BaseModel):
     name_for_image_3: str
 
 
-class QuantityModel(BaseModel):
+class QuantitiesModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     quantity_1: int | None = Field(default=0)
@@ -43,14 +43,19 @@ class ProductModelBase(BaseModel):
     discount: int | None = Field(default=None)
 
 
-class ProductModelGET(ProductModelBase):
+class ProductModelForAllWearGET(ProductModelBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
 
     images: list[ImagesModel]
+
+
+class ProductModelForWearGET(ProductModelForAllWearGET):
+    model_config = ConfigDict(from_attributes=True)
+
     sizes: list[SizeModel]
-    quantities: list[QuantityModel]
+    quantities: list[QuantitiesModel]
 
 
 class ProductModelPurchase(BaseModel):

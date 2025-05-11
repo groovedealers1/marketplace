@@ -5,11 +5,11 @@ from sqlalchemy import delete
 
 from ..posts.database import async_session
 from ..posts.models import Products, Images, Sizes, Quantity
-from mock_marketplace.src.models import ProductModelDELETE, ProductModelBase, ImagesModel, SizeModel, QuantityModel
+from mock_marketplace.src.models import ProductModelDELETE, ProductModelBase, ImagesModel, SizeModel, QuantitiesModel
 
 
 async def insert_products(product_data: ProductModelBase, sizes_data: SizeModel,
-                          quantities_data: QuantityModel, images_data: ImagesModel) -> None:
+                          quantities_data: QuantitiesModel, images_data: ImagesModel) -> None:
 
     async with async_session() as session:
         wear = Products(**product_data.model_dump())

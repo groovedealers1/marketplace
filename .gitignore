@@ -14,8 +14,8 @@ mock_marketplace/alembic/__pycache__
 mock_marketplace/alembic/versions/__pycache__
 
 mock_marketplace/.env
-
 mock_marketplace/tests
+mock_marketplace/__pycache__
 
 mock_marketplace/src/frontend/frontend-mock-marketplace/public/images/
 

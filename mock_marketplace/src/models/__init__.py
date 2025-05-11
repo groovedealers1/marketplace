@@ -1,9 +1,10 @@
 from mock_marketplace.src.models.frontend_model import (
     ProductModelDELETE,
-    ProductModelGET,
+    ProductModelForAllWearGET,
+    ProductModelForWearGET,
     ProductModelPurchase,
     ProductModelBase,
     ImagesModel,
     SizeModel,
-    QuantityModel
+    QuantitiesModel
 )

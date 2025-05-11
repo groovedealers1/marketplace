@@ -3,7 +3,7 @@ import pathlib
 from fastapi import APIRouter, UploadFile
 
 from mock_marketplace.src.admin.admin_comands import insert_products, delete_product
-from mock_marketplace.src.models import ProductModelDELETE, ProductModelBase, ImagesModel, SizeModel, QuantityModel
+from mock_marketplace.src.models import ProductModelDELETE, ProductModelBase, ImagesModel, SizeModel, QuantitiesModel
 
 
 router = APIRouter(tags=['insert wear in db'], prefix='/admin')
@@ -11,7 +11,7 @@ router = APIRouter(tags=['insert wear in db'], prefix='/admin')
 
 @router.post('/insert_wear')
 async def all_wears(product_data: ProductModelBase, sizes_data: SizeModel,
-                    quantities_data: QuantityModel, images_data: ImagesModel) -> None:
+                    quantities_data: QuantitiesModel, images_data: ImagesModel) -> None:
 
     await insert_products(product_data, sizes_data, quantities_data, images_data)
 

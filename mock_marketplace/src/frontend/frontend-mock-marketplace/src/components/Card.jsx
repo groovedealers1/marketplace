@@ -18,10 +18,10 @@ export default function Card () {
 
     const getWear = () => {
         axios.get('http://localhost:8000/wears/' + wearId).then(r => {
-            if (Object.values(r.data.sizes[0]).every(x => x === null) === true) {
+            if (Object.values(r.data[0].sizes[0]).every(x => x === null) === true) {
                 modalCloseFunc();
             }
-            setWear(r.data);
+            setWear(r.data[0]);
         })
             .then(showPage)
     }

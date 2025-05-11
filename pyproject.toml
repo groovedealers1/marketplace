@@ -21,6 +21,7 @@ fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 passlib = "^1.7.4"
 aiogram = "^3.15.0"
 requests = "^2.32.3"
+redis = {extras = ["hiredis"], version = "^6.0.0"}
 
 [build-system]
 requires = ["poetry-core"]
